@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/taskListFragment"
-        android:name="com.nkot.todolist.ui.TaskListFragment"
+        android:name="com.nkot.todolist.ui.TaskList.TaskListFragment"
         android:label="fragment_task_list"
         tools:layout="@layout/fragment_task_list" />
 </navigation>
