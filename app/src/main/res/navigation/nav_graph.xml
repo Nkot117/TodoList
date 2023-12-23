@@ -9,5 +9,14 @@
         android:id="@+id/taskListFragment"
         android:name="com.nkot.todolist.ui.TaskList.TaskListFragment"
         android:label="fragment_task_list"
-        tools:layout="@layout/fragment_task_list" />
+        tools:layout="@layout/fragment_task_list" >
+        <action
+            android:id="@+id/action_taskListFragment_to_taskAddFragment"
+            app:destination="@id/taskAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskAddFragment"
+        android:name="com.nkot.todolist.ui.TaskAdd.TaskAddFragment"
+        android:label="fragment_task_add"
+        tools:layout="@layout/fragment_task_add" />
 </navigation>

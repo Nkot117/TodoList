@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import com.nkot.todolist.BaseApplication
 import com.nkot.todolist.adapter.TaskListAdapter
 
@@ -43,6 +44,12 @@ class TaskListFragment : Fragment() {
                 taskListAdapter.submitList(it)
             }
         }
+
+        binding.addTaskFab.setOnClickListener {
+            val action =  TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
         return binding.root
     }
 }
