@@ -44,6 +44,9 @@ class TaskListFragment : Fragment() {
             },
             onItemCompleteButtonClicked = {
                 viewModel.changeTaskStatus(it)
+            },
+            onItemDeleteButtonClicked = {
+                viewModel.deleteTask(it)
             }
         )
 
