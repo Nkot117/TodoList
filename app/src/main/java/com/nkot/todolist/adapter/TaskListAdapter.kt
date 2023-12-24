@@ -17,11 +17,17 @@ class TaskListAdapter(
 
     class TaskViewHolder(private val binding: TaskRowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(task: TaskEntity, onItemCompleteButtonClicked: (TaskEntity) -> Unit) {
+        fun bind(
+            task: TaskEntity, onItemClicked: (TaskEntity) -> Unit,
+            onItemCompleteButtonClicked: (TaskEntity) -> Unit
+        ) {
             binding.taskTitle.text = task.title
-            binding.taskStatus.text = if(task.completed) "Completed" else "Not Completed"
+            binding.taskStatus.text = if (task.completed) "Completed" else "Not Completed"
             binding.taskCompleteButton.setOnClickListener {
                 onItemCompleteButtonClicked(task)
+            }
+            binding.taskRowItem.setOnClickListener {
+                onItemClicked(task)
             }
         }
     }
@@ -33,7 +39,7 @@ class TaskListAdapter(
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = getItem(position)
-        holder.bind(task, onItemCompleteButtonClicked)
+        holder.bind(task, onItemClicked, onItemCompleteButtonClicked)
     }
 
     companion object {

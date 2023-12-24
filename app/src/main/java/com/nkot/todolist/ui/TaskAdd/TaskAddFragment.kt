@@ -6,9 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.nkot.todolist.BaseApplication
+import com.nkot.todolist.database.Task.TaskEntity
 import com.nkot.todolist.databinding.FragmentTaskAddBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TaskAddFragment : Fragment() {
     private var _binding: FragmentTaskAddBinding? = null
@@ -17,6 +22,8 @@ class TaskAddFragment : Fragment() {
     private val viewModel: TaskAddViewModel by viewModels {
         TaskAddViewModelFactory((activity?.application as BaseApplication).database.taskDao())
     }
+
+    private val navigationArgs: TaskAddFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +34,24 @@ class TaskAddFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentTaskAddBinding.inflate(layoutInflater)
-        binding.buttonAddTask.setOnClickListener {
-            addTask()
-            findNavController().navigateUp()
+        val id = navigationArgs.id
+        if (id > 0) {
+            lifecycleScope.launch(Dispatchers.Main) {
+                viewModel.getTask(id).collect { TaskEntity ->
+                    binding.editTaskTitle.setText(TaskEntity.title)
+                    binding.editTaskDescription.setText(TaskEntity.description)
+                    binding.buttonAddTask.setOnClickListener {
+                        updateTask(TaskEntity)
+                        findNavController().navigateUp()
+                    }
+                }
+            }
+
+        } else {
+            binding.buttonAddTask.setOnClickListener {
+                addTask()
+                findNavController().navigateUp()
+            }
         }
         return binding.root
     }
@@ -38,5 +60,17 @@ class TaskAddFragment : Fragment() {
         val title = binding.editTaskTitle.text.toString()
         val description = binding.editTaskDescription.text.toString()
         viewModel.addTask(title, description)
+    }
+
+    private fun updateTask(taskEntity: TaskEntity) {
+        val updatedTask = TaskEntity(
+            taskEntity.id,
+            binding.editTaskTitle.text.toString(),
+            binding.editTaskDescription.text.toString(),
+            taskEntity.completed,
+            taskEntity.created
+        )
+
+        viewModel.updateTask(updatedTask)
     }
 }
