@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.nkot.todolist.database.Task.TaskDao
 import com.nkot.todolist.database.Task.TaskEntity
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
@@ -19,6 +20,16 @@ class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
 
         viewModelScope.launch {
             taskDao.insert(newTask)
+        }
+    }
+
+    fun getTask(id: Int): Flow<TaskEntity> {
+        return taskDao.getById(id)
+    }
+
+    fun updateTask(taskEntity: TaskEntity) {
+        viewModelScope.launch {
+            taskDao.update(taskEntity)
         }
     }
 }

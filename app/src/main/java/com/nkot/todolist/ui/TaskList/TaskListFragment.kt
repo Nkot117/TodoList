@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nkot.todolist.BaseApplication
 import com.nkot.todolist.adapter.TaskListAdapter
@@ -25,6 +25,7 @@ class TaskListFragment : Fragment() {
     private val viewModel: TaskListViewModel by viewModels {
         TaskListViewModelFactory((activity?.application as BaseApplication).database.taskDao())
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -35,9 +36,19 @@ class TaskListFragment : Fragment() {
     ): View? {
         _binding = FragmentTaskListBinding.inflate(layoutInflater)
         val recyclerView = binding.taskListRecyclerView
-        val taskListAdapter = TaskListAdapter {
-            Log.d("TaskListFragment", "Clicked on task item")
-        }
+        val taskListAdapter = TaskListAdapter(
+            onItemClicked = {
+                val action =
+                    TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment(it.id)
+                this.findNavController().navigate(action)
+            },
+            onItemCompleteButtonClicked = {
+                viewModel.changeTaskStatus(it)
+            },
+            onItemDeleteButtonClicked = {
+                viewModel.deleteTask(it)
+            }
+        )
 
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.allTasks.collect {
@@ -49,8 +60,8 @@ class TaskListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(this.context)
 
         binding.addTaskFab.setOnClickListener {
-            val action =  TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment()
-            Navigation.findNavController(it).navigate(action)
+            val action = TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment()
+            this.findNavController().navigate(action)
         }
 
         return binding.root
