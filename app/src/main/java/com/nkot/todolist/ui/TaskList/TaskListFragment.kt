@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nkot.todolist.BaseApplication
@@ -35,9 +36,14 @@ class TaskListFragment : Fragment() {
     ): View? {
         _binding = FragmentTaskListBinding.inflate(layoutInflater)
         val recyclerView = binding.taskListRecyclerView
-        val taskListAdapter = TaskListAdapter {
-            Log.d("TaskListFragment", "Clicked on task item")
-        }
+        val taskListAdapter = TaskListAdapter(
+            {
+                Log.d("TaskListFragment", "Clicked")
+            },
+            {
+                viewModel.changeTaskStatus(it)
+            }
+        )
 
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.allTasks.collect {
