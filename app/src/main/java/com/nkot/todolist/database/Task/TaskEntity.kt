@@ -6,7 +6,7 @@ import java.util.Date
 
 @Entity(tableName = "task_table")
 data class TaskEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
     val description: String? = null,
     val completed: Boolean,
