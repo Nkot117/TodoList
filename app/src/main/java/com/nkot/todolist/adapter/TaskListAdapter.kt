@@ -1,6 +1,7 @@
 package com.nkot.todolist.adapter
 
 
+import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -25,8 +26,12 @@ class TaskListAdapter(
             binding.taskTitle.text = task.title
             if (task.completed) {
                 binding.taskCompleteButton.setImageResource(R.drawable.icon_checked_status_button)
+                binding.taskTitle.paintFlags = binding.taskTitle.paintFlags or STRIKE_THRU_TEXT_FLAG
+                binding.taskTitle.alpha = 0.5f
             } else {
                 binding.taskCompleteButton.setImageResource(R.drawable.icon_unchecked_status_button)
+                binding.taskTitle.paintFlags = binding.taskTitle.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
+                binding.taskTitle.alpha = 1.0f
             }
             binding.taskCompleteButton.setOnClickListener {
                 onItemCompleteButtonClicked(task)
