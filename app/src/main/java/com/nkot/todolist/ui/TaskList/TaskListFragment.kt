@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_IDLE
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nkot.todolist.BaseApplication
 import com.nkot.todolist.adapter.TaskListAdapter
@@ -44,9 +47,6 @@ class TaskListFragment : Fragment() {
             },
             onItemCompleteButtonClicked = {
                 viewModel.changeTaskStatus(it)
-            },
-            onItemDeleteButtonClicked = {
-                viewModel.deleteTask(it)
             }
         )
 
@@ -56,8 +56,38 @@ class TaskListFragment : Fragment() {
             }
         }
 
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            ACTION_STATE_IDLE,
+            ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(
+                recyclerView: androidx.recyclerview.widget.RecyclerView,
+                viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+                target: androidx.recyclerview.widget.RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(
+                viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+                direction: Int
+            ) {
+                val position = viewHolder.adapterPosition
+                val task = taskListAdapter.currentList[position]
+                viewModel.deleteTask(task)
+            }
+        })
+
         recyclerView.adapter = taskListAdapter
+        itemTouchHelper.attachToRecyclerView(recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
+
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                this.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
         binding.addTaskFab.setOnClickListener {
             val action = TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment()

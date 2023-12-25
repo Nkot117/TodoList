@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.nkot.todolist.R
 import com.nkot.todolist.database.Task.TaskEntity
 import com.nkot.todolist.databinding.TaskRowItemBinding
 
 class TaskListAdapter(
     private val onItemClicked: (TaskEntity) -> Unit,
-    private val onItemCompleteButtonClicked: (TaskEntity) -> Unit,
-    private val onItemDeleteButtonClicked: (TaskEntity) -> Unit
+    private val onItemCompleteButtonClicked: (TaskEntity) -> Unit
 ) :
     ListAdapter<TaskEntity, TaskListAdapter.TaskViewHolder>(DiffCallback) {
 
@@ -20,19 +20,19 @@ class TaskListAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             task: TaskEntity, onItemClicked: (TaskEntity) -> Unit,
-            onItemCompleteButtonClicked: (TaskEntity) -> Unit,
-            onItemDeleteButtonClicked: (TaskEntity) -> Unit
+            onItemCompleteButtonClicked: (TaskEntity) -> Unit
         ) {
             binding.taskTitle.text = task.title
-            binding.taskStatus.text = if (task.completed) "Completed" else "Not Completed"
+            if (task.completed) {
+                binding.taskCompleteButton.setImageResource(R.drawable.icon_checked_status_button)
+            } else {
+                binding.taskCompleteButton.setImageResource(R.drawable.icon_unchecked_status_button)
+            }
             binding.taskCompleteButton.setOnClickListener {
                 onItemCompleteButtonClicked(task)
             }
             binding.taskRowItem.setOnClickListener {
                 onItemClicked(task)
-            }
-            binding.taskDeleteButton.setOnClickListener {
-                onItemDeleteButtonClicked(task)
             }
         }
     }
@@ -44,7 +44,7 @@ class TaskListAdapter(
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = getItem(position)
-        holder.bind(task, onItemClicked, onItemCompleteButtonClicked, onItemDeleteButtonClicked)
+        holder.bind(task, onItemClicked, onItemCompleteButtonClicked)
     }
 
     companion object {
