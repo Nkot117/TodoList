@@ -42,7 +42,7 @@ class TaskListFragment : Fragment() {
         val taskListAdapter = TaskListAdapter(
             onItemClicked = {
                 val action =
-                    TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment(it.id)
+                    TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment("${it.title}の編集", it.id)
                 this.findNavController().navigate(action)
             },
             onItemCompleteButtonClicked = {
@@ -90,7 +90,7 @@ class TaskListFragment : Fragment() {
         )
 
         binding.addTaskFab.setOnClickListener {
-            val action = TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment()
+            val action = TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment("新北タスクの追加")
             this.findNavController().navigate(action)
         }
 

@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/taskListFragment"
         android:name="com.nkot.todolist.ui.TaskList.TaskListFragment"
-        android:label="fragment_task_list"
-        tools:layout="@layout/fragment_task_list" >
+        android:label="@string/task_list_fragment_title"
+        tools:layout="@layout/fragment_task_list">
         <action
             android:id="@+id/action_taskListFragment_to_taskAddFragment"
             app:destination="@id/taskAddFragment" />
@@ -17,11 +17,14 @@
     <fragment
         android:id="@+id/taskAddFragment"
         android:name="com.nkot.todolist.ui.TaskAdd.TaskAddFragment"
-        android:label="fragment_task_add"
-        tools:layout="@layout/fragment_task_add" >
+        android:label="{title}"
+        tools:layout="@layout/fragment_task_add">
         <argument
             android:name="id"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
 </navigation>
