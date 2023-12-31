@@ -42,7 +42,7 @@ class TaskListFragment : Fragment() {
         val taskListAdapter = TaskListAdapter(
             onItemClicked = {
                 val action =
-                    TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment("${it.title}の編集", it.id)
+                    TaskListFragmentDirections.actionTaskListFragmentToTaskEditFragment("${it.title}の編集", it.id)
                 this.findNavController().navigate(action)
             },
             onItemCompleteButtonClicked = {
@@ -90,8 +90,8 @@ class TaskListFragment : Fragment() {
         )
 
         binding.addTaskFab.setOnClickListener {
-            val action = TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment(getString(com.nkot.todolist.R.string.add_task_fragment_title))
-            this.findNavController().navigate(action)
+//            val action = TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment(getString(com.nkot.todolist.R.string.add_task_fragment_title))
+//            this.findNavController().navigate(action)
         }
 
         return binding.root

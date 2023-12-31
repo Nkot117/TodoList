@@ -1,4 +1,4 @@
-package com.nkot.todolist.ui.TaskAdd
+package com.nkot.todolist.ui.TaskEdit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

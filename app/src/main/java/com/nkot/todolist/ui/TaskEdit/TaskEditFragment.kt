@@ -1,4 +1,4 @@
-package com.nkot.todolist.ui.TaskAdd
+package com.nkot.todolist.ui.TaskEdit
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import com.nkot.todolist.databinding.FragmentTaskAddBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TaskAddFragment : Fragment() {
+class TaskEditFragment : Fragment() {
     private var _binding: FragmentTaskAddBinding? = null
     private val binding get() = _binding!!
 
@@ -23,7 +23,7 @@ class TaskAddFragment : Fragment() {
         TaskAddViewModelFactory((activity?.application as BaseApplication).database.taskDao())
     }
 
-    private val navigationArgs: TaskAddFragmentArgs by navArgs()
+    private val navigationArgs: TaskEditFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
