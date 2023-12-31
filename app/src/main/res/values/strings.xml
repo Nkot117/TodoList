@@ -2,4 +2,5 @@
     <string name="app_name">TodoList</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="task_list_fragment_title">タスク一覧</string>
+    <string name="add_task_fragment_title">タスク追加</string>
 </resources>

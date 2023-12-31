@@ -90,7 +90,7 @@ class TaskListFragment : Fragment() {
         )
 
         binding.addTaskFab.setOnClickListener {
-            val action = TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment("新北タスクの追加")
+            val action = TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment(getString(com.nkot.todolist.R.string.add_task_fragment_title))
             this.findNavController().navigate(action)
         }
 
