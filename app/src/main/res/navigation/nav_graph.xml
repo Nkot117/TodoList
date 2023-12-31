@@ -18,7 +18,7 @@
         android:id="@+id/taskEditFragment"
         android:name="com.nkot.todolist.ui.TaskEdit.TaskEditFragment"
         android:label="{title}"
-        tools:layout="@layout/fragment_task_add">
+        tools:layout="@layout/fragment_task_edit">
         <argument
             android:name="id"
             android:defaultValue="-1"

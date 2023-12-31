@@ -11,12 +11,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.nkot.todolist.BaseApplication
 import com.nkot.todolist.database.Task.TaskEntity
-import com.nkot.todolist.databinding.FragmentTaskAddBinding
+import com.nkot.todolist.databinding.FragmentTaskEditBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class TaskEditFragment : Fragment() {
-    private var _binding: FragmentTaskAddBinding? = null
+    private var _binding: FragmentTaskEditBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: TaskAddViewModel by viewModels {
@@ -33,7 +33,7 @@ class TaskEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTaskAddBinding.inflate(layoutInflater)
+        _binding = FragmentTaskEditBinding.inflate(layoutInflater)
         val id = navigationArgs.id
         if (id > 0) {
             lifecycleScope.launch(Dispatchers.Main) {
