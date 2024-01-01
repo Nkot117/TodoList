@@ -3,7 +3,10 @@ package com.nkot.todolist.ui.TaskAdd
 
 import android.app.Dialog
 import android.os.Bundle
+import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
+import com.google.android.material.R
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nkot.todolist.BaseApplication
@@ -22,6 +25,8 @@ class TaskAddFragment : BottomSheetDialogFragment() {
         _binding = FragmentTaskAddBinding.inflate(layoutInflater)
         val dialog = BottomSheetDialog(requireContext())
         dialog.setContentView(binding.root)
+        val parent = binding.root.parent as FrameLayout
+        parent.layoutParams.height = FrameLayout.LayoutParams.MATCH_PARENT
         binding.editTaskDeadline.setOnClickListener {
             val datePickerDialog = DatePickerFragment.newInstance()
             datePickerDialog.show(this.childFragmentManager, DatePickerFragment.TAG)
