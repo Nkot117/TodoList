@@ -20,7 +20,7 @@ class TaskEditFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: TaskAddViewModel by viewModels {
-        TaskAddViewModelFactory((activity?.application as BaseApplication).database.taskDao())
+        TaskEditViewModelFactory((activity?.application as BaseApplication).database.taskDao())
     }
 
     private val navigationArgs: TaskEditFragmentArgs by navArgs()

@@ -34,7 +34,7 @@ class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
     }
 }
 
-class TaskAddViewModelFactory(private val taskDao: TaskDao) : ViewModelProvider.Factory {
+class TaskEditViewModelFactory(private val taskDao: TaskDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TaskAddViewModel::class.java)) {
             return TaskAddViewModel(taskDao) as T
