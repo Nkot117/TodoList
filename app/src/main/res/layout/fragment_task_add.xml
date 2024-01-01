@@ -11,61 +11,71 @@
         android:id="@+id/screen_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="17dp"
         android:text="タスクの追加"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
+        android:layout_marginTop="10dp"
         android:background="#C6C4C4"
-        app:layout_constraintTop_toBottomOf="@+id/screen_title_text"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="10dp"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/screen_title_text" />
 
-    <EditText
-        android:id="@+id/edit_task_title"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_task_title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:background="#EDECEC"
-        android:hint="Title"
         android:layout_marginTop="10dp"
-        android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/divider">
 
-    <EditText
-        android:id="@+id/edit_task_description"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_task_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EDECEC"
+            android:hint="Title"
+            android:inputType="text"
+            android:padding="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_task_description_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:background="#EDECEC"
-        android:hint="Description"
         android:layout_marginTop="15dp"
-        android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/edit_task_title"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/edit_task_title_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_task_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EDECEC"
+            android:hint="Description"
+            android:inputType="text"
+            android:padding="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <EditText
         android:id="@+id/edit_task_deadline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:focusable="false"
-        android:background="#EDECEC"
-        android:hint="Deadline"
         android:layout_marginTop="15dp"
+        android:background="#EDECEC"
+        android:focusable="false"
+        android:hint="Deadline"
+        android:inputType="date"
         android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/edit_task_description"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/edit_task_description_layout"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/button_add_task"
@@ -74,7 +84,6 @@
         android:layout_marginTop="25dp"
         android:padding="20dp"
         android:text="Add Task"
-        app:layout_constraintTop_toBottomOf="@+id/edit_task_deadline"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/edit_task_deadline" />
 </androidx.constraintlayout.widget.ConstraintLayout>
