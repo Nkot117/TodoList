@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.nkot.todolist.database.Task.TaskDao
+import com.nkot.todolist.database.Task.TaskEntity
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -18,21 +19,19 @@ import java.util.Locale
 class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
 
     fun addTask(title: String, description: String?, deadline: String?) {
-        val now = Date()
-        val formattedDeadline = if (deadline.isNullOrBlank()) {
-            null
-        } else {
+        val formattedDeadline = deadline?.let {
             val formatter = SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN)
             formatter.parse(deadline) as Date
         }
 
-        val newTask = com.nkot.todolist.database.Task.TaskEntity(
+        val newTask = TaskEntity(
             title = title,
             description = description,
             completed = false,
             deadline = formattedDeadline,
-            created = now
+            created = Date()
         )
+
         viewModelScope.launch {
             taskDao.insert(newTask)
         }
