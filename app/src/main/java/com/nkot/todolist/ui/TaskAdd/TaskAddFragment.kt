@@ -17,8 +17,8 @@ class TaskAddFragment : BottomSheetDialogFragment() {
         val dialog = BottomSheetDialog(requireContext())
         dialog.setContentView(binding.root)
         binding.editTaskDeadline.setOnClickListener{
-            val dialog = DatePickerFragment()
-            dialog.show(this.childFragmentManager, DatePickerFragment.TAG)
+            val datePickerDialog = DatePickerFragment.newInstance()
+            datePickerDialog.show(this.childFragmentManager, DatePickerFragment.TAG)
         }
         return dialog
     }

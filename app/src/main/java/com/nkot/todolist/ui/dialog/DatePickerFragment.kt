@@ -3,7 +3,6 @@ package com.nkot.todolist.ui.dialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.widget.DatePicker
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
@@ -11,11 +10,6 @@ import com.nkot.todolist.R
 import com.nkot.todolist.ui.TaskAdd.TaskAddFragment
 import java.util.Calendar
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DatePickerFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val calendar = Calendar.getInstance()
@@ -41,9 +35,8 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
 
     companion object {
         const val TAG = "DatePickerFragment"
-        fun newInstance(edit: EditText): DatePickerFragment {
-            val dialog = DatePickerFragment()
-            return dialog
+        fun newInstance(): DatePickerFragment {
+            return DatePickerFragment()
         }
     }
 
