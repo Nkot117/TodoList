@@ -63,14 +63,14 @@ class TaskEditFragment : Fragment() {
     }
 
     private fun updateTask(taskEntity: TaskEntity) {
-        val updatedTask = TaskEntity(
-            taskEntity.id,
-            binding.editTaskTitle.text.toString(),
-            binding.editTaskDescription.text.toString(),
-            taskEntity.completed,
-            taskEntity.created
-        )
-
-        viewModel.updateTask(updatedTask)
+//        val updatedTask = TaskEntity(
+//            taskEntity.id,
+//            binding.editTaskTitle.text.toString(),
+//            binding.editTaskDescription.text.toString(),
+//            taskEntity.completed,
+//            taskEntity.created
+//        )
+//
+//        viewModel.updateTask(updatedTask)
     }
 }
