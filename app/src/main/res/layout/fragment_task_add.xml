@@ -31,8 +31,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        app:endIconMode="clear_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider">
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:startIconDrawable="@drawable/icon_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_task_title"
@@ -53,8 +55,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        app:endIconMode="clear_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_task_title_layout">
+        app:layout_constraintTop_toBottomOf="@+id/edit_task_title_layout"
+        app:startIconDrawable="@drawable/icon_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_task_description"
@@ -75,8 +79,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        app:endIconMode="clear_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_task_description_layout">
+        app:layout_constraintTop_toBottomOf="@+id/edit_task_description_layout"
+        app:startIconDrawable="@drawable/icon_calendar">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_task_deadline"
