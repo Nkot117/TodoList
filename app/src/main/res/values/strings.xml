@@ -10,8 +10,8 @@
     <!-- タスク追加画面   -->
     <string name="task_add_title">タスク追加</string>
     <string name="task_title_hint">タイトル</string>
+    <string name="task_title_helper">※必須</string>
     <string name="task_description_hint">説明</string>
     <string name="task_deadline_hint">期限</string>
     <string name="task_add_button_text">タスクを追加</string>
-
 </resources>

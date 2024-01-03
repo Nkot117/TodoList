@@ -34,6 +34,8 @@
         app:endIconMode="clear_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:helperText="@string/task_title_helper"
+        app:helperTextTextColor="@color/md_theme_error"
         app:startIconDrawable="@drawable/icon_text">
 
         <com.google.android.material.textfield.TextInputEditText
