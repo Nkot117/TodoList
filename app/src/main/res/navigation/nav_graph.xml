@@ -11,14 +11,14 @@
         android:label="@string/task_list_fragment_title"
         tools:layout="@layout/fragment_task_list">
         <action
-            android:id="@+id/action_taskListFragment_to_taskAddFragment"
-            app:destination="@id/taskAddFragment" />
+            android:id="@+id/action_taskListFragment_to_taskEditFragment"
+            app:destination="@id/taskEditFragment" />
     </fragment>
     <fragment
-        android:id="@+id/taskAddFragment"
-        android:name="com.nkot.todolist.ui.TaskAdd.TaskAddFragment"
+        android:id="@+id/taskEditFragment"
+        android:name="com.nkot.todolist.ui.TaskEdit.TaskEditFragment"
         android:label="{title}"
-        tools:layout="@layout/fragment_task_add">
+        tools:layout="@layout/fragment_task_edit">
         <argument
             android:name="id"
             android:defaultValue="-1"

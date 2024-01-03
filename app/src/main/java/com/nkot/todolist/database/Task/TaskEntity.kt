@@ -10,5 +10,6 @@ data class TaskEntity(
     val title: String,
     val description: String? = null,
     val completed: Boolean,
+    val deadline: Date? = null,
     val created: Date,
 )

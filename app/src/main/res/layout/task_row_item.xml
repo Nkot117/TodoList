@@ -34,7 +34,7 @@
         android:id="@+id/task_complete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@null"
         android:src="@drawable/icon_unchecked_status_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

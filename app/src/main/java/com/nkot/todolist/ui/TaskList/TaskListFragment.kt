@@ -1,7 +1,6 @@
 package com.nkot.todolist.ui.TaskList
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +17,7 @@ import com.nkot.todolist.adapter.TaskListAdapter
 
 
 import com.nkot.todolist.databinding.FragmentTaskListBinding
+import com.nkot.todolist.ui.TaskAdd.TaskAddFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -42,7 +42,7 @@ class TaskListFragment : Fragment() {
         val taskListAdapter = TaskListAdapter(
             onItemClicked = {
                 val action =
-                    TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment("${it.title}の編集", it.id)
+                    TaskListFragmentDirections.actionTaskListFragmentToTaskEditFragment("${it.title}の編集", it.id)
                 this.findNavController().navigate(action)
             },
             onItemCompleteButtonClicked = {
@@ -90,8 +90,7 @@ class TaskListFragment : Fragment() {
         )
 
         binding.addTaskFab.setOnClickListener {
-            val action = TaskListFragmentDirections.actionTaskListFragmentToTaskAddFragment(getString(com.nkot.todolist.R.string.add_task_fragment_title))
-            this.findNavController().navigate(action)
+            TaskAddFragment.newInstance().show(childFragmentManager, "TaskAddDialog")
         }
 
         return binding.root

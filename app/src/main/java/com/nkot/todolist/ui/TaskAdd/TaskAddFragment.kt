@@ -1,21 +1,17 @@
 package com.nkot.todolist.ui.TaskAdd
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.nkot.todolist.BaseApplication
-import com.nkot.todolist.database.Task.TaskEntity
-import com.nkot.todolist.databinding.FragmentTaskAddBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-class TaskAddFragment : Fragment() {
+import android.app.Dialog
+import android.os.Bundle
+import android.widget.FrameLayout
+import androidx.fragment.app.viewModels
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.nkot.todolist.BaseApplication
+import com.nkot.todolist.databinding.FragmentTaskAddBinding
+import com.nkot.todolist.ui.dialog.DatePickerFragment
+
+class TaskAddFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentTaskAddBinding? = null
     private val binding get() = _binding!!
 
@@ -23,54 +19,35 @@ class TaskAddFragment : Fragment() {
         TaskAddViewModelFactory((activity?.application as BaseApplication).database.taskDao())
     }
 
-    private val navigationArgs: TaskAddFragmentArgs by navArgs()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = FragmentTaskAddBinding.inflate(layoutInflater)
-        val id = navigationArgs.id
-        if (id > 0) {
-            lifecycleScope.launch(Dispatchers.Main) {
-                viewModel.getTask(id).collect { TaskEntity ->
-                    binding.editTaskTitle.setText(TaskEntity.title)
-                    binding.editTaskDescription.setText(TaskEntity.description)
-                    binding.buttonAddTask.setOnClickListener {
-                        updateTask(TaskEntity)
-                        findNavController().navigateUp()
-                    }
-                }
-            }
-
-        } else {
-            binding.buttonAddTask.setOnClickListener {
-                addTask()
-                findNavController().navigateUp()
-            }
+        val dialog = BottomSheetDialog(requireContext())
+        dialog.setContentView(binding.root)
+        val parent = binding.root.parent as FrameLayout
+        parent.layoutParams.height = FrameLayout.LayoutParams.MATCH_PARENT
+        binding.editTaskDeadline.setOnClickListener {
+            val datePickerDialog = DatePickerFragment.newInstance()
+            datePickerDialog.show(this.childFragmentManager, DatePickerFragment.TAG)
         }
-        return binding.root
+        binding.buttonAddTask.setOnClickListener {
+            addTask()
+            dialog.dismiss()
+        }
+        return dialog
     }
 
     private fun addTask() {
         val title = binding.editTaskTitle.text.toString()
         val description = binding.editTaskDescription.text.toString()
-        viewModel.addTask(title, description)
+        val deadline = binding.editTaskDeadline.text.toString()
+        viewModel.addTask(title, description, deadline.takeIf { it.isNotBlank() })
     }
 
-    private fun updateTask(taskEntity: TaskEntity) {
-        val updatedTask = TaskEntity(
-            taskEntity.id,
-            binding.editTaskTitle.text.toString(),
-            binding.editTaskDescription.text.toString(),
-            taskEntity.completed,
-            taskEntity.created
-        )
-
-        viewModel.updateTask(updatedTask)
+    companion object {
+        fun newInstance(): TaskAddFragment {
+            val dialog = TaskAddFragment()
+            return dialog
+        }
     }
+
 }
