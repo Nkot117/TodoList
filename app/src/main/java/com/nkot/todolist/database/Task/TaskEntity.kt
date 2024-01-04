@@ -13,3 +13,10 @@ data class TaskEntity(
     val deadline: Date? = null,
     val created: Date,
 )
+
+fun TaskEntity.deadlineToString(): String? {
+    return deadline?.let {
+        val formatter = java.text.SimpleDateFormat("yyyy/MM/dd", java.util.Locale.JAPAN)
+        formatter.format(it)
+    }
+}

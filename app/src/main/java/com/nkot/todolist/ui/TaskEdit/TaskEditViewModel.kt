@@ -35,11 +35,6 @@ class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
             taskDao.update(taskEntity)
         }
     }
-
-    fun getFormattedDateToString(deadline: Date): String? {
-        val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN)
-        return dateFormat.format(deadline)
-    }
 }
 
 class TaskEditViewModelFactory(private val taskDao: TaskDao) : ViewModelProvider.Factory {

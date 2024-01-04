@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.nkot.todolist.BaseApplication
 import com.nkot.todolist.database.Task.TaskEntity
+import com.nkot.todolist.database.Task.deadlineToString
 import com.nkot.todolist.databinding.FragmentTaskEditBinding
 import com.nkot.todolist.ui.dialog.DatePickerFragment
 import kotlinx.coroutines.Dispatchers
@@ -40,11 +41,7 @@ class TaskEditFragment : Fragment() {
             viewModel.getTask(id).collect { taskEntity ->
                 binding.editTaskTitle.setText(taskEntity.title)
                 binding.editTaskDescription.setText(taskEntity.description)
-                binding.editTaskDeadline.setText(taskEntity.deadline?.let {
-                    viewModel.getFormattedDateToString(
-                        it
-                    )
-                })
+                binding.editTaskDeadline.setText(taskEntity.deadlineToString())
                 binding.buttonAddTask.setOnClickListener {
                     updateTask(taskEntity)
                     findNavController().navigateUp()
