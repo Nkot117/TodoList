@@ -7,6 +7,9 @@ import com.nkot.todolist.database.Task.TaskDao
 import com.nkot.todolist.database.Task.TaskEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
 
@@ -31,6 +34,11 @@ class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
         viewModelScope.launch {
             taskDao.update(taskEntity)
         }
+    }
+
+    fun getFormattedDeadline(deadline: Date): String? {
+        val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN)
+        return dateFormat.format(deadline)
     }
 }
 

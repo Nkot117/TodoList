@@ -35,22 +35,19 @@ class TaskEditFragment : Fragment() {
     ): View? {
         _binding = FragmentTaskEditBinding.inflate(layoutInflater)
         val id = navigationArgs.id
-        if (id > 0) {
-            lifecycleScope.launch(Dispatchers.Main) {
-                viewModel.getTask(id).collect { TaskEntity ->
-                    binding.editTaskTitle.setText(TaskEntity.title)
-                    binding.editTaskDescription.setText(TaskEntity.description)
-                    binding.buttonAddTask.setOnClickListener {
-                        updateTask(TaskEntity)
-                        findNavController().navigateUp()
-                    }
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.getTask(id).collect { TaskEntity ->
+                binding.editTaskTitle.setText(TaskEntity.title)
+                binding.editTaskDescription.setText(TaskEntity.description)
+                binding.editTaskDeadline.setText(TaskEntity.deadline?.let {
+                    viewModel.getFormattedDeadline(
+                        it
+                    )
+                })
+                binding.buttonAddTask.setOnClickListener {
+                    updateTask(TaskEntity)
+                    findNavController().navigateUp()
                 }
-            }
-
-        } else {
-            binding.buttonAddTask.setOnClickListener {
-                addTask()
-                findNavController().navigateUp()
             }
         }
         return binding.root
