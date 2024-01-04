@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.nkot.todolist.BaseApplication
 import com.nkot.todolist.database.Task.TaskEntity
 import com.nkot.todolist.databinding.FragmentTaskEditBinding
+import com.nkot.todolist.ui.dialog.DatePickerFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -50,6 +51,12 @@ class TaskEditFragment : Fragment() {
                 }
             }
         }
+
+        binding.editTaskDeadline.setOnClickListener {
+            val datePickerDialog = DatePickerFragment.newInstance(binding.editTaskDeadline.id)
+            datePickerDialog.show(this.childFragmentManager, DatePickerFragment.TAG)
+        }
+
         return binding.root
     }
 
