@@ -7,11 +7,8 @@ import com.nkot.todolist.database.Task.TaskDao
 import com.nkot.todolist.database.Task.TaskEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
-class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
+class TaskEditViewModel(private val taskDao: TaskDao) : ViewModel() {
     var editTask: TaskEntity? = null
 
     fun getTask(id: Int): Flow<TaskEntity> {
@@ -38,8 +35,8 @@ class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
 
 class TaskEditViewModelFactory(private val taskDao: TaskDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(TaskAddViewModel::class.java)) {
-            return TaskAddViewModel(taskDao) as T
+        if (modelClass.isAssignableFrom(TaskEditViewModel::class.java)) {
+            return TaskEditViewModel(taskDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

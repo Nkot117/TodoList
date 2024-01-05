@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.nkot.todolist.BaseApplication
-import com.nkot.todolist.database.Task.TaskEntity
 import com.nkot.todolist.database.Task.deadlineToString
 import com.nkot.todolist.databinding.FragmentTaskEditBinding
 import com.nkot.todolist.ui.dialog.DatePickerFragment
@@ -21,7 +20,7 @@ class TaskEditFragment : Fragment() {
     private var _binding: FragmentTaskEditBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: TaskAddViewModel by viewModels {
+    private val viewModel: TaskEditViewModel by viewModels {
         TaskEditViewModelFactory((activity?.application as BaseApplication).database.taskDao())
     }
 
