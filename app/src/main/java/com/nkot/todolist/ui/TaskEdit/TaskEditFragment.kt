@@ -50,7 +50,7 @@ class TaskEditFragment : Fragment() {
         }
 
         binding.editTaskDeadline.setOnClickListener {
-            val datePickerDialog = DatePickerFragment.newInstance(binding.editTaskDeadline.id)
+            val datePickerDialog = DatePickerFragment.newInstance()
             datePickerDialog.show(this.childFragmentManager, DatePickerFragment.TAG)
         }
 
