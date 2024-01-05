@@ -61,7 +61,7 @@ class TaskEditFragment : Fragment() {
     private fun updateTask() {
         val title = binding.editTaskTitle.text.toString()
         val description = binding.editTaskDescription.text.toString()
-        val deadline = binding.editTaskDeadline.text.toString()
-        viewModel.updateTask(title, description, deadline.takeIf { it.isNotBlank() })
+        val deadline = binding.editTaskDeadline.text.toString().takeIf { it.isNotBlank() }
+        viewModel.updateTask(title, description, deadline)
     }
 }

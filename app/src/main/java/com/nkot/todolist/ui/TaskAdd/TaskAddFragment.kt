@@ -39,8 +39,8 @@ class TaskAddFragment : BottomSheetDialogFragment() {
     private fun addTask() {
         val title = binding.addTaskTitle.text.toString()
         val description = binding.addTaskDescription.text.toString()
-        val deadline = binding.addTaskDeadline.text.toString()
-        viewModel.addTask(title, description, deadline.takeIf { it.isNotBlank() })
+        val deadline = binding.addTaskDeadline.text.toString().takeIf { it.isNotBlank() }
+        viewModel.addTask(title, description, deadline)
     }
 
     companion object {
