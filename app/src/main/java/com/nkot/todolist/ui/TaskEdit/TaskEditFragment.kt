@@ -39,11 +39,12 @@ class TaskEditFragment : Fragment() {
         val id = navigationArgs.id
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.getTask(id).collect { taskEntity ->
+                viewModel.editTask = taskEntity
                 binding.editTaskTitle.setText(taskEntity.title)
                 binding.editTaskDescription.setText(taskEntity.description)
                 binding.editTaskDeadline.setText(taskEntity.deadlineToString())
                 binding.buttonAddTask.setOnClickListener {
-                    updateTask(taskEntity)
+                    updateTask()
                     findNavController().navigateUp()
                 }
             }
@@ -57,21 +58,10 @@ class TaskEditFragment : Fragment() {
         return binding.root
     }
 
-    private fun addTask() {
+    private fun updateTask() {
         val title = binding.editTaskTitle.text.toString()
         val description = binding.editTaskDescription.text.toString()
-        viewModel.addTask(title, description)
-    }
-
-    private fun updateTask(taskEntity: TaskEntity) {
-//        val updatedTask = TaskEntity(
-//            taskEntity.id,
-//            binding.editTaskTitle.text.toString(),
-//            binding.editTaskDescription.text.toString(),
-//            taskEntity.completed,
-//            taskEntity.created
-//        )
-//
-//        viewModel.updateTask(updatedTask)
+        val deadline = binding.editTaskDeadline.text.toString()
+        viewModel.updateTask(title, description, deadline.takeIf { it.isNotBlank() })
     }
 }

@@ -12,27 +12,26 @@ import java.util.Date
 import java.util.Locale
 
 class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
-
-    fun addTask(title: String, description: String?) {
-        val newTask = TaskEntity(
-            title = title,
-            description = description,
-            completed = false,
-            created = java.util.Date()
-        )
-
-        viewModelScope.launch {
-            taskDao.insert(newTask)
-        }
-    }
+    var editTask: TaskEntity? = null
 
     fun getTask(id: Int): Flow<TaskEntity> {
         return taskDao.getById(id)
     }
 
-    fun updateTask(taskEntity: TaskEntity) {
+    fun updateTask(title: String, description: String?, deadline: String?) {
+        val taskEntity = editTask ?: return
+        val formattedDeadline = deadline?.let {
+            TaskEntity.getFormattedStringToDate(it)
+        }
+        val newTask = taskEntity.copy(
+            title = title,
+            description = description,
+            deadline = formattedDeadline
+        )
+
+
         viewModelScope.launch {
-            taskDao.update(taskEntity)
+            taskDao.update(newTask)
         }
     }
 }
