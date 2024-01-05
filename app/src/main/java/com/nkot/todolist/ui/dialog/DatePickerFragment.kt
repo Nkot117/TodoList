@@ -8,6 +8,7 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.nkot.todolist.R
 import com.nkot.todolist.ui.TaskAdd.TaskAddFragment
+import com.nkot.todolist.ui.TaskEdit.TaskEditFragment
 import java.util.Calendar
 
 class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
@@ -27,8 +28,12 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        val fragment = parentFragment as TaskAddFragment
-        val editDeadlineTextView = fragment.dialog?.findViewById<EditText>(R.id.edit_task_deadline)
+        val editDeadlineTextView = when (val fragment = parentFragment) {
+            is TaskAddFragment -> fragment.dialog?.findViewById<EditText>(R.id.add_task_deadline)
+            is TaskEditFragment -> fragment.view?.findViewById<EditText>(R.id.edit_task_deadline)
+            else -> null
+        }
+
         val deadlineText = getString(R.string.deadline_text_format, year, month + 1, dayOfMonth)
         editDeadlineTextView?.setText(deadlineText)
     }

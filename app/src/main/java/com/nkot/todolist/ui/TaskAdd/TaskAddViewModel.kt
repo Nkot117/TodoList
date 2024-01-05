@@ -20,8 +20,7 @@ class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
 
     fun addTask(title: String, description: String?, deadline: String?) {
         val formattedDeadline = deadline?.let {
-            val formatter = SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN)
-            formatter.parse(deadline) as Date
+            TaskEntity.getFormattedStringToDate(it)
         }
 
         val newTask = TaskEntity(

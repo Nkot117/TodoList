@@ -10,8 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.nkot.todolist.BaseApplication
-import com.nkot.todolist.database.Task.TaskEntity
+import com.nkot.todolist.database.Task.deadlineToString
 import com.nkot.todolist.databinding.FragmentTaskEditBinding
+import com.nkot.todolist.ui.dialog.DatePickerFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -19,7 +20,7 @@ class TaskEditFragment : Fragment() {
     private var _binding: FragmentTaskEditBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: TaskAddViewModel by viewModels {
+    private val viewModel: TaskEditViewModel by viewModels {
         TaskEditViewModelFactory((activity?.application as BaseApplication).database.taskDao())
     }
 
@@ -35,42 +36,31 @@ class TaskEditFragment : Fragment() {
     ): View? {
         _binding = FragmentTaskEditBinding.inflate(layoutInflater)
         val id = navigationArgs.id
-        if (id > 0) {
-            lifecycleScope.launch(Dispatchers.Main) {
-                viewModel.getTask(id).collect { TaskEntity ->
-                    binding.editTaskTitle.setText(TaskEntity.title)
-                    binding.editTaskDescription.setText(TaskEntity.description)
-                    binding.buttonAddTask.setOnClickListener {
-                        updateTask(TaskEntity)
-                        findNavController().navigateUp()
-                    }
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.getTask(id).collect { taskEntity ->
+                viewModel.editTask = taskEntity
+                binding.editTaskTitle.setText(taskEntity.title)
+                binding.editTaskDescription.setText(taskEntity.description)
+                binding.editTaskDeadline.setText(taskEntity.deadlineToString())
+                binding.buttonAddTask.setOnClickListener {
+                    updateTask()
+                    findNavController().navigateUp()
                 }
             }
-
-        } else {
-            binding.buttonAddTask.setOnClickListener {
-                addTask()
-                findNavController().navigateUp()
-            }
         }
+
+        binding.editTaskDeadline.setOnClickListener {
+            val datePickerDialog = DatePickerFragment.newInstance()
+            datePickerDialog.show(this.childFragmentManager, DatePickerFragment.TAG)
+        }
+
         return binding.root
     }
 
-    private fun addTask() {
+    private fun updateTask() {
         val title = binding.editTaskTitle.text.toString()
         val description = binding.editTaskDescription.text.toString()
-        viewModel.addTask(title, description)
-    }
-
-    private fun updateTask(taskEntity: TaskEntity) {
-//        val updatedTask = TaskEntity(
-//            taskEntity.id,
-//            binding.editTaskTitle.text.toString(),
-//            binding.editTaskDescription.text.toString(),
-//            taskEntity.completed,
-//            taskEntity.created
-//        )
-//
-//        viewModel.updateTask(updatedTask)
+        val deadline = binding.editTaskDeadline.text.toString().takeIf { it.isNotBlank() }
+        viewModel.updateTask(title, description, deadline)
     }
 }

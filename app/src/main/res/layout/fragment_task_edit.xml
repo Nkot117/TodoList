@@ -4,36 +4,94 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.TaskEdit.TaskEditFragment">
+    tools:context=".ui.TaskEdit.TaskEditFragment"
+    android:padding="20dp"
+    >
 
-
-    <EditText
-        android:id="@+id/edit_task_title"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_task_title_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:endIconMode="clear_text"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"
-        />
+        app:helperText="@string/task_title_helper"
+        app:helperTextTextColor="@color/md_theme_error"
+        app:startIconDrawable="@drawable/icon_text">
 
-    <EditText
-        android:id="@+id/edit_task_description"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_task_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EDECEC"
+            android:hint="@string/task_title_hint"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_task_description_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/edit_task_title"
+        android:layout_marginTop="15dp"
+        app:endIconMode="clear_text"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/edit_task_title_layout"
+        app:startIconDrawable="@drawable/icon_text">
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_task_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EDECEC"
+            android:hint="@string/task_description_hint"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_task_deadline_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:endIconMode="clear_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_task_description_layout"
+        app:startIconDrawable="@drawable/icon_calendar">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_task_deadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EDECEC"
+            android:focusable="false"
+            android:hint="@string/task_deadline_hint"
+            android:inputType="date"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="10dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_add_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Task"
-        app:layout_constraintTop_toBottomOf="@+id/edit_task_description"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"
-        />
-
+        android:layout_marginTop="25dp"
+        android:padding="15dp"
+        android:text="@string/task_edit_button_text"
+        app:icon="@drawable/icon_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_task_deadline_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

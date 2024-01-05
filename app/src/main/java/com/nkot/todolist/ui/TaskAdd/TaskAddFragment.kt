@@ -25,7 +25,7 @@ class TaskAddFragment : BottomSheetDialogFragment() {
         dialog.setContentView(binding.root)
         val parent = binding.root.parent as FrameLayout
         parent.layoutParams.height = FrameLayout.LayoutParams.MATCH_PARENT
-        binding.editTaskDeadline.setOnClickListener {
+        binding.addTaskDeadline.setOnClickListener {
             val datePickerDialog = DatePickerFragment.newInstance()
             datePickerDialog.show(this.childFragmentManager, DatePickerFragment.TAG)
         }
@@ -37,16 +37,15 @@ class TaskAddFragment : BottomSheetDialogFragment() {
     }
 
     private fun addTask() {
-        val title = binding.editTaskTitle.text.toString()
-        val description = binding.editTaskDescription.text.toString()
-        val deadline = binding.editTaskDeadline.text.toString()
-        viewModel.addTask(title, description, deadline.takeIf { it.isNotBlank() })
+        val title = binding.addTaskTitle.text.toString()
+        val description = binding.addTaskDescription.text.toString()
+        val deadline = binding.addTaskDeadline.text.toString().takeIf { it.isNotBlank() }
+        viewModel.addTask(title, description, deadline)
     }
 
     companion object {
         fun newInstance(): TaskAddFragment {
-            val dialog = TaskAddFragment()
-            return dialog
+            return TaskAddFragment()
         }
     }
 
