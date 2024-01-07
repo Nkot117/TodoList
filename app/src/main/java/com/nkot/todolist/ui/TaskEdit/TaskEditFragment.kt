@@ -57,6 +57,11 @@ class TaskEditFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     private fun updateTask() {
         val title = binding.editTaskTitle.text.toString()
         val description = binding.editTaskDescription.text.toString()
