@@ -30,7 +30,8 @@ class TaskListAdapter(
                 binding.taskTitle.alpha = 0.5f
             } else {
                 binding.taskCompleteButton.setImageResource(R.drawable.icon_unchecked_status_button)
-                binding.taskTitle.paintFlags = binding.taskTitle.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
+                binding.taskTitle.paintFlags =
+                    binding.taskTitle.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
                 binding.taskTitle.alpha = 1.0f
             }
             binding.taskCompleteButton.setOnClickListener {

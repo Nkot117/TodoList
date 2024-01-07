@@ -14,8 +14,8 @@ data class TaskEntity(
     val completed: Boolean,
     val deadline: Date? = null,
     val created: Date,
-){
-    companion object{
+) {
+    companion object {
         fun getFormattedStringToDate(dateString: String): Date {
             val formatter = SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN)
             return formatter.parse(dateString) as Date

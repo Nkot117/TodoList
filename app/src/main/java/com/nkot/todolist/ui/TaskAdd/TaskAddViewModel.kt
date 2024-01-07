@@ -1,20 +1,12 @@
 package com.nkot.todolist.ui.TaskAdd
 
-import android.annotation.SuppressLint
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.nkot.todolist.database.Task.TaskDao
 import com.nkot.todolist.database.Task.TaskEntity
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.Date
-import java.util.Locale
 
 class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
 
