@@ -36,6 +36,11 @@ class TaskAddFragment : BottomSheetDialogFragment() {
         return dialog
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     private fun addTask() {
         val title = binding.addTaskTitle.text.toString()
         val description = binding.addTaskDescription.text.toString()
