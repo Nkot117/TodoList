@@ -29,20 +29,18 @@ class TaskListFragment : Fragment() {
         TaskListViewModelFactory((activity?.application as BaseApplication).database.taskDao())
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentTaskListBinding.inflate(layoutInflater)
-        val recyclerView = binding.taskListRecyclerView
         val taskListAdapter = TaskListAdapter(
             onItemClicked = {
                 val action =
-                    TaskListFragmentDirections.actionTaskListFragmentToTaskEditFragment("${it.title}の編集", it.id)
+                    TaskListFragmentDirections.actionTaskListFragmentToTaskEditFragment(
+                        "${it.title}の編集",
+                        it.id
+                    )
                 this.findNavController().navigate(action)
             },
             onItemCompleteButtonClicked = {
@@ -56,7 +54,30 @@ class TaskListFragment : Fragment() {
             }
         }
 
-        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+        val itemTouchHelper = getItemTouchHelperForSwipeToDelete(taskListAdapter)
+
+        binding.taskListRecyclerView.also {
+            itemTouchHelper.attachToRecyclerView(it)
+            it.adapter = taskListAdapter
+            it.layoutManager = LinearLayoutManager(this.context)
+            it.addItemDecoration(
+                DividerItemDecoration(
+                    this.context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+
+        }
+
+        binding.addTaskFab.setOnClickListener {
+            TaskAddFragment.newInstance().show(childFragmentManager, "TaskAddDialog")
+        }
+
+        return binding.root
+    }
+
+    private fun getItemTouchHelperForSwipeToDelete(taskListAdapter: TaskListAdapter): ItemTouchHelper {
+        return ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ACTION_STATE_IDLE,
             ItemTouchHelper.LEFT
         ) {
@@ -77,22 +98,5 @@ class TaskListFragment : Fragment() {
                 viewModel.deleteTask(task)
             }
         })
-
-        recyclerView.adapter = taskListAdapter
-        itemTouchHelper.attachToRecyclerView(recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
-
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                this.context,
-                DividerItemDecoration.VERTICAL
-            )
-        )
-
-        binding.addTaskFab.setOnClickListener {
-            TaskAddFragment.newInstance().show(childFragmentManager, "TaskAddDialog")
-        }
-
-        return binding.root
     }
 }
