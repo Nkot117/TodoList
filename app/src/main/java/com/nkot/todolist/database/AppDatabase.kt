@@ -10,13 +10,13 @@ import com.nkot.todolist.database.Task.TaskEntity
 
 @Database(entities = [TaskEntity::class], version = 1)
 @TypeConverters(Converters::class)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
 
-     companion object {
+    companion object {
         private var INSTANCE: AppDatabase? = null
 
-         fun getInstance(context: Context): AppDatabase {
+        fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

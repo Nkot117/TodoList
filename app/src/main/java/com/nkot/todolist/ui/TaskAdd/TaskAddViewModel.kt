@@ -5,31 +5,26 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.nkot.todolist.database.Task.TaskDao
 import com.nkot.todolist.database.Task.TaskEntity
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import java.util.Date
 
 class TaskAddViewModel(private val taskDao: TaskDao) : ViewModel() {
 
-    fun addTask(title: String, description: String?) {
+    fun addTask(title: String, description: String?, deadline: String?) {
+        val formattedDeadline = deadline?.let {
+            TaskEntity.getFormattedStringToDate(it)
+        }
+
         val newTask = TaskEntity(
             title = title,
             description = description,
             completed = false,
-            created = java.util.Date()
+            deadline = formattedDeadline,
+            created = Date()
         )
 
         viewModelScope.launch {
             taskDao.insert(newTask)
-        }
-    }
-
-    fun getTask(id: Int): Flow<TaskEntity> {
-        return taskDao.getById(id)
-    }
-
-    fun updateTask(taskEntity: TaskEntity) {
-        viewModelScope.launch {
-            taskDao.update(taskEntity)
         }
     }
 }
