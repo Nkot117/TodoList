@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.nkot.todolist.R
 import com.nkot.todolist.database.Task.TaskEntity
+import com.nkot.todolist.database.Task.deadlineToString
 import com.nkot.todolist.databinding.TaskRowItemBinding
 
 class TaskListAdapter(
@@ -24,6 +25,7 @@ class TaskListAdapter(
             onItemCompleteButtonClicked: (TaskEntity) -> Unit
         ) {
             binding.taskTitle.text = task.title
+            binding.taskDeadline.text = task.deadlineToString()
             if (task.completed) {
                 binding.taskCompleteButton.setImageResource(R.drawable.icon_checked_status_button)
                 binding.taskTitle.paintFlags = binding.taskTitle.paintFlags or STRIKE_THRU_TEXT_FLAG
