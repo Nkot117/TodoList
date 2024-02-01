@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_IDLE
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nkot.todolist.BaseApplication
 import com.nkot.todolist.adapter.TaskListAdapter
 
 
 import com.nkot.todolist.databinding.FragmentTaskListBinding
 import com.nkot.todolist.ui.TaskAdd.TaskAddFragment
-import com.nkot.todolist.ui.dialog.CustomDialogFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -94,10 +94,19 @@ class TaskListFragment : Fragment() {
                 viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
                 direction: Int
             ) {
-                val position = viewHolder.adapterPosition
-                val task = taskListAdapter.currentList[position]
-                viewModel.deleteTask(task)
-                CustomDialogFragment.newInstance().show(childFragmentManager, "CustomDialog")
+                context?.let {
+                    MaterialAlertDialogBuilder(it)
+                        .setMessage("タスクを削除しますか？")
+                        .setNegativeButton("削除する") { _, _ ->
+                            val position = viewHolder.adapterPosition
+                            val task = taskListAdapter.currentList[position]
+                            viewModel.deleteTask(task)
+                        }
+                        .setPositiveButton("キャンセル") { _, _ ->
+                            taskListAdapter.notifyItemChanged(viewHolder.adapterPosition)
+                        }
+                        .show()
+                }
             }
         })
     }
