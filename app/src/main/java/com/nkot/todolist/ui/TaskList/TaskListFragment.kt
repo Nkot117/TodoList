@@ -18,6 +18,7 @@ import com.nkot.todolist.adapter.TaskListAdapter
 
 import com.nkot.todolist.databinding.FragmentTaskListBinding
 import com.nkot.todolist.ui.TaskAdd.TaskAddFragment
+import com.nkot.todolist.ui.dialog.CustomDialogFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -96,6 +97,7 @@ class TaskListFragment : Fragment() {
                 val position = viewHolder.adapterPosition
                 val task = taskListAdapter.currentList[position]
                 viewModel.deleteTask(task)
+                CustomDialogFragment.newInstance().show(childFragmentManager, "CustomDialog")
             }
         })
     }
