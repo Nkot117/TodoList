@@ -1,10 +1,14 @@
 package com.nkot.todolist.ui.TaskList
 
+import android.graphics.Canvas
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -12,7 +16,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_IDLE
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nkot.todolist.BaseApplication
+import com.nkot.todolist.R
 import com.nkot.todolist.adapter.TaskListAdapter
 
 
@@ -82,20 +90,66 @@ class TaskListFragment : Fragment() {
             ItemTouchHelper.LEFT
         ) {
             override fun onMove(
-                recyclerView: androidx.recyclerview.widget.RecyclerView,
-                viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
-                target: androidx.recyclerview.widget.RecyclerView.ViewHolder
+                recyclerView: RecyclerView,
+                viewHolder: ViewHolder,
+                target: ViewHolder
             ): Boolean {
                 return false
             }
 
             override fun onSwiped(
-                viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+                viewHolder: ViewHolder,
                 direction: Int
             ) {
-                val position = viewHolder.adapterPosition
-                val task = taskListAdapter.currentList[position]
-                viewModel.deleteTask(task)
+                context?.let {
+                    MaterialAlertDialogBuilder(it)
+                        .setCancelable(false)
+                        .setMessage(getString(R.string.task_delete_dialog_message))
+                        .setNegativeButton(getString(R.string.task_delete_dialog_positive_button_text)) { _, _ ->
+                            val position = viewHolder.adapterPosition
+                            val task = taskListAdapter.currentList[position]
+                            viewModel.deleteTask(task)
+                        }
+                        .setPositiveButton(getString(R.string.task_delete_dialog_negative_button_text)) { _, _ ->
+                            taskListAdapter.notifyItemChanged(viewHolder.adapterPosition)
+                        }
+                        .show()
+                }
+            }
+
+            override fun onChildDraw(
+                canvas: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                super.onChildDraw(
+                    canvas,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+                val itemView = viewHolder.itemView
+                val background = ColorDrawable(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.md_theme_secondary
+                    ))
+
+                background.setBounds(
+                    itemView.right + dX.toInt(),
+                    itemView.top,
+                    itemView.right,
+                    itemView.bottom
+                )
+
+                background.draw(canvas)
             }
         })
     }
