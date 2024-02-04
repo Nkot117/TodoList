@@ -26,16 +26,16 @@ import com.nkot.todolist.adapter.TaskListAdapter
 
 import com.nkot.todolist.databinding.FragmentTaskListBinding
 import com.nkot.todolist.ui.TaskAdd.TaskAddFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class TaskListFragment : Fragment() {
     private var _binding: FragmentTaskListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: TaskListViewModel by viewModels {
-        TaskListViewModelFactory((activity?.application as BaseApplication).database.taskDao())
-    }
+    private val viewModel: TaskListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
