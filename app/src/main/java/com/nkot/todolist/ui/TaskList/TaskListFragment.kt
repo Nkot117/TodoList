@@ -104,13 +104,13 @@ class TaskListFragment : Fragment() {
                 context?.let {
                     MaterialAlertDialogBuilder(it)
                         .setCancelable(false)
-                        .setMessage("タスクを削除しますか？")
-                        .setNegativeButton("削除する") { _, _ ->
+                        .setMessage(getString(R.string.task_delete_dialog_message))
+                        .setNegativeButton(getString(R.string.task_delete_dialog_positive_button_text)) { _, _ ->
                             val position = viewHolder.adapterPosition
                             val task = taskListAdapter.currentList[position]
                             viewModel.deleteTask(task)
                         }
-                        .setPositiveButton("キャンセル") { _, _ ->
+                        .setPositiveButton(getString(R.string.task_delete_dialog_negative_button_text)) { _, _ ->
                             taskListAdapter.notifyItemChanged(viewHolder.adapterPosition)
                         }
                         .show()
