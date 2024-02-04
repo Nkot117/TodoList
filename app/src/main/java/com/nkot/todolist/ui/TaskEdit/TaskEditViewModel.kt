@@ -1,14 +1,17 @@
 package com.nkot.todolist.ui.TaskEdit
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.nkot.todolist.database.Task.TaskDao
 import com.nkot.todolist.database.Task.TaskEntity
+import dagger.hilt.android.lifecycle.HiltViewModel
+
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TaskEditViewModel(private val taskDao: TaskDao) : ViewModel() {
+@HiltViewModel
+class TaskEditViewModel @Inject constructor(private val taskDao: TaskDao) : ViewModel() {
     var editTask: TaskEntity? = null
 
     fun getTask(id: Int): Flow<TaskEntity> {
@@ -31,14 +34,4 @@ class TaskEditViewModel(private val taskDao: TaskDao) : ViewModel() {
             taskDao.update(newTask)
         }
     }
-}
-
-class TaskEditViewModelFactory(private val taskDao: TaskDao) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(TaskEditViewModel::class.java)) {
-            return TaskEditViewModel(taskDao) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-
 }

@@ -15,16 +15,16 @@ import com.nkot.todolist.database.Task.TaskEntity
 import com.nkot.todolist.database.Task.deadlineToString
 import com.nkot.todolist.databinding.FragmentTaskEditBinding
 import com.nkot.todolist.ui.dialog.DatePickerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class TaskEditFragment : Fragment() {
     private var _binding: FragmentTaskEditBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: TaskEditViewModel by viewModels {
-        TaskEditViewModelFactory((activity?.application as BaseApplication).database.taskDao())
-    }
+    private val viewModel: TaskEditViewModel by viewModels()
 
     private val navigationArgs: TaskEditFragmentArgs by navArgs()
 

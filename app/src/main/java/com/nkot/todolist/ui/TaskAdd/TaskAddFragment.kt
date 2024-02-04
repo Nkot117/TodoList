@@ -11,14 +11,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nkot.todolist.BaseApplication
 import com.nkot.todolist.databinding.FragmentTaskAddBinding
 import com.nkot.todolist.ui.dialog.DatePickerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TaskAddFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentTaskAddBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: TaskAddViewModel by viewModels {
-        TaskAddViewModelFactory((activity?.application as BaseApplication).database.taskDao())
-    }
+    private val viewModel: TaskAddViewModel by viewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = FragmentTaskAddBinding.inflate(layoutInflater)
