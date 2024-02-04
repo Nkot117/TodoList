@@ -35,13 +35,3 @@ class TaskEditViewModel @Inject constructor(private val taskDao: TaskDao) : View
         }
     }
 }
-
-class TaskEditViewModelFactory(private val taskDao: TaskDao) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(TaskEditViewModel::class.java)) {
-            return TaskEditViewModel(taskDao) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-
-}
