@@ -1,6 +1,7 @@
 package com.nkot.todolist.ui.TaskEdit
 
 import android.os.Bundle
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +44,18 @@ class TaskEditFragment : Fragment() {
             val datePickerDialog = DatePickerFragment.newInstance()
             datePickerDialog.show(this.childFragmentManager, DatePickerFragment.TAG)
         }
+
+        binding.editTaskTitle.addTextChangedListener(object: TextWatcher{
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.buttonAddTask.isEnabled = s?.isNotBlank() == true
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // NOP
+            }
+            override fun afterTextChanged(s: android.text.Editable?) {
+                // NOP
+            }
+        })
 
         return binding.root
     }
