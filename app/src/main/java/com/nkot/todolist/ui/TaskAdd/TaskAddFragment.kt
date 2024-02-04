@@ -3,6 +3,7 @@ package com.nkot.todolist.ui.TaskAdd
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.TextWatcher
 import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -25,6 +26,17 @@ class TaskAddFragment : BottomSheetDialogFragment() {
         dialog.setContentView(binding.root)
         val parent = binding.root.parent as FrameLayout
         parent.layoutParams.height = FrameLayout.LayoutParams.MATCH_PARENT
+        binding.addTaskTitle.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.buttonAddTask.isEnabled = s?.isNotBlank() == true
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // NOP
+            }
+            override fun afterTextChanged(s: android.text.Editable?) {
+                // NOP
+            }
+        })
         binding.addTaskDeadline.setOnClickListener {
             val datePickerDialog = DatePickerFragment.newInstance()
             datePickerDialog.show(this.childFragmentManager, DatePickerFragment.TAG)
