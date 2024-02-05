@@ -8,7 +8,6 @@ import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.nkot.todolist.BaseApplication
 import com.nkot.todolist.databinding.FragmentTaskAddBinding
 import com.nkot.todolist.ui.dialog.DatePickerFragment
 import dagger.hilt.android.AndroidEntryPoint
