@@ -2,15 +2,15 @@ package com.nkot.todolist.ui.TaskAdd
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nkot.todolist.database.Task.TaskDao
 import com.nkot.todolist.database.Task.TaskEntity
+import com.nkot.todolist.repository.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskAddViewModel @Inject constructor(private val taskDao: TaskDao) : ViewModel() {
+class TaskAddViewModel @Inject constructor(private val taskRepository: TaskRepository) : ViewModel() {
 
     fun addTask(title: String, description: String?, deadline: String?) {
         val formattedDeadline = deadline?.let {
@@ -26,7 +26,7 @@ class TaskAddViewModel @Inject constructor(private val taskDao: TaskDao) : ViewM
         )
 
         viewModelScope.launch {
-            taskDao.insert(newTask)
+            taskRepository.insert(newTask)
         }
     }
 }
