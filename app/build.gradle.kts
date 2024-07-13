@@ -3,7 +3,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs.kotlin")
-    kotlin("kapt")
     id("com.google.dagger.hilt.android")
 }
 
@@ -14,7 +13,7 @@ android {
     defaultConfig {
         applicationId = "com.nkot.todolist"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -49,9 +48,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    kapt {
-        correctErrorTypes = true
-    }
 }
 
 dependencies {
@@ -84,5 +80,5 @@ dependencies {
 
     // Dagger-Hilt
     implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-android-compiler:2.48")
+    ksp("com.google.dagger:hilt-android-compiler:2.48")
 }
